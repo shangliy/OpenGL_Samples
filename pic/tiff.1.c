@@ -78,14 +78,14 @@ int tiff_write(char *file, Pic *pic)
      *     2           -- Horizontal differencing
      */
     TIFFSetField(tif, TIFFTAG_PREDICTOR, 2);
-    
+
     if( TIFFScanlineSize(tif) != scanline_size )
     {
 	fprintf(stderr,
 		"TIFF: Mismatch with library's expected scanline size!\n");
 	return FALSE;
     }
-    
+
     TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, TIFFDefaultStripSize(tif, -1));
 
     scanline = pic->pix;
@@ -124,7 +124,7 @@ Pic *tiff_read(char *file, Pic *opic)
 	return NULL;
 
     result = TIFFReadRGBAImage(tif, w, h, raster, TRUE);
-    
+
     if( opic && npixels == (opic->nx * opic->ny))
 	pic = opic;
     else

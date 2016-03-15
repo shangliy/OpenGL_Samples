@@ -7,7 +7,7 @@
 PIC_PATH = $(abspath $(CURDIR)/../pic)
 
 INCLUDE = -I$(PIC_PATH)
-LIBRARIES = -L$(PIC_PATH) -lGL -lGLU -lglut -ljpeg -lpicio -lm
+LIBRARIES = -L$(PIC_PATH) -lGL -lGLU -lglut  -lpicio -lm -ljpeg
 
 COMPILER = g++
 COMPILERFLAGS = -O3 $(INCLUDE)

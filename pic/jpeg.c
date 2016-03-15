@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <tiffio.h>
+//#include <tiffio.h>
 #include <jpeglib.h>
 #include "pic.h"
 
 #define QUALITY 95
 /*
- * jpeg: subroutines for reading and writing JFIF (JPEG standard)  picture 
- *       files.  Code adjusted from the example.c provided with libjpeg 
+ * jpeg: subroutines for reading and writing JFIF (JPEG standard)  picture
+ *       files.  Code adjusted from the example.c provided with libjpeg
  *       library uses libjpeg by IJG
  *
  * Christopher Rodriguez     Jan 31, 2000
@@ -30,24 +30,24 @@ int jpeg_write(char *filename, Pic *pic) {
     fprintf(stderr, "Need bits per pixel to be 3.\n");
     return FALSE;
   }
-    
+
   cinfo.err = jpeg_std_error(&jerr);
   jpeg_create_compress(&cinfo);
-  
+
   if ((outfile = fopen(filename, "wb")) == NULL) {
     fprintf(stderr, "can't open file for output: %s\n", filename);
     exit(1);
   }
-  
+
   jpeg_stdio_dest(&cinfo, outfile);
 
   cinfo.image_width = image_width; 	/* image width and height, in pixels */
   cinfo.image_height = image_height;
   cinfo.input_components = 3;		/* # of color components per pixel */
   cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
-  
+
   jpeg_set_defaults(&cinfo);
-  
+
   jpeg_set_quality(&cinfo, QUALITY, TRUE);
 
   jpeg_start_compress(&cinfo, TRUE);
@@ -62,7 +62,7 @@ int jpeg_write(char *filename, Pic *pic) {
   jpeg_finish_compress(&cinfo);
 
   fclose(outfile);
-  
+
   jpeg_destroy_compress(&cinfo);
 
   return TRUE;
@@ -131,11 +131,11 @@ Pic *jpeg_read(char *filename, Pic *opic) {
    * output image dimensions available, as well as the output colormap
    * if we asked for color quantization.
    * In this example, we need to make an output work buffer of the right size.
-   */ 
+   */
   /* JSAMPLEs per row in output buffer */
   row_stride = cinfo.output_width * cinfo.output_components;
   /* Make a one-row-high sample array that will go away when done with image */
-  retval = pic_alloc(cinfo.image_width, cinfo.image_height, 
+  retval = pic_alloc(cinfo.image_width, cinfo.image_height,
 		     cinfo.output_components, opic);
 
   /* Step 6: while (scan lines remain to be read) */
@@ -151,7 +151,7 @@ Pic *jpeg_read(char *filename, Pic *opic) {
      */
     row_pointer[0] = & retval->pix[crows * row_stride];
     (void) jpeg_read_scanlines(&cinfo, row_pointer, 1);
-    
+
     crows++;
   }
 
@@ -213,7 +213,7 @@ int jpeg_get_size(char *file, int *nx, int *ny) {
 
 	*nx = cinfo.image_width;
 	*ny = cinfo.image_height;
-	
+
   /* This is an important step since it will release a good deal of memory. */
   jpeg_destroy_decompress(&cinfo);
 
