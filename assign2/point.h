@@ -21,6 +21,7 @@
 #define _POINT_HEADER
 
 extern void setpoint(point *r,float x,float y,float z);
+extern float distance(point *a,point *b);
 
 extern void mult(point*, float, point*);
 

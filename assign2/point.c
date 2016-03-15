@@ -20,11 +20,14 @@
 #include <math.h>
 #include "point.h"
 
+
 void setpoint(point *r,float x,float y,float z){
 	r->x = x;
 	r->y = y;
 	r->z = z;
 }
+
+
 
 void mult(point *r, float t, point *p){
 	r->x = t * p->x;
@@ -113,4 +116,12 @@ int intersection(point *r, point *a, point *v, point *p, point *n){
 	r->y = a->y + t * v->y;
 	r->z = a->z + t * v->z;
 	return 1;
+}
+
+float distance(point *a,point *b)
+{
+	point p;
+	sub(&p,a,b);
+	float d = norme(&p);
+	return d;
 }
